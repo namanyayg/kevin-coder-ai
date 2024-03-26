@@ -5,6 +5,35 @@
   </form>
 </template>
 
+<style scoped>
+form {
+  margin: 0 auto;
+}
+input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: blue;
+  color: white;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: darkblue;
+}
+
+button:active {
+  background-color: navy;
+}
+</style>
+
 <script>
 export default {
   name: 'ChatView',
@@ -63,7 +92,7 @@ Also write a test for the same.
 All the text you give will directly be sent to a terminal, so don't include any unnecessary text and always give full response for any code. ONLY reply in valid terminal commands. Do NOT use echo or sed, only use "nano" to edit files.
 
 EVERYTHING YOU SAY WILL DIRECTLY BE SENT TO A TERMINAL, so only reply with a stream of keypresses that will get the result. Please only provide a stream of keypresses to be piped into an actual terminal without any explanation or text. You can provide control characters like ^X to close nano. Instead of "Enter", use \\n. Please only send valid commands and keypresses that can execute the goal in a terminal directly, do not write any explanation or comments or I might lose my job.`
-      const responseMessage = await chat(message)
+      const responseMessage = await this.chat(message)
 
       // remove ```bash and ``` from the message
       let responseMessageCleaned = responseMessage

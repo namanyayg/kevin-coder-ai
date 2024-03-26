@@ -1,0 +1,15 @@
+{
+  "name": "kevin-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Namanyay Goel",
+  "license": "MIT",
+  "dependencies": {
+    "node-pty": "^1.0.0",
+    "ws": "^8.16.0"
+  }
+}

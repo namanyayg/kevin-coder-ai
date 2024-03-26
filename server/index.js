@@ -4,9 +4,6 @@ var pty = require('node-pty');
 
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 
-
-let terminalPromptString = '';
-
 const commandProcessor = (command) => {
     return command;
 }
