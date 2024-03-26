@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@xterm/addon-attach": "^0.10.0",
+    "@xterm/xterm": "^5.4.0",
+    "node-pty": "^1.0.0",
+    "ws": "^8.16.0"
+  },
+  "name": "kevin",
+  "description": "Kevin the Coder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "axios": "^1.6.8",
+    "jest": "^29.7.0",
+    "vue": "^3.4.21"
+  }
+}
