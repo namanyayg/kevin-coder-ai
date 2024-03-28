@@ -3,7 +3,7 @@ const os = require('os');
 const pty = require('node-pty');
 const path = require('path')
 
-const CWD = process.env.CWD || path.join(__dirname, 'test');
+const CWD = process.env.CWD || path.join(__dirname, 'kevin-output');
 
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 
