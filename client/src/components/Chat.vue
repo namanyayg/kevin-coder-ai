@@ -2,9 +2,11 @@
   <article>
     <h2>Specify a goal you&rsquo;re looking to execute</h2>
     <p><em>Note: Kevin is currently in Alpha, so please only give him small goals for now.</em></p>
-    <form @submit.prevent="planAndExecuteGoal">
+    <form :className="isFormEnabled ? '' : 'disabled'" @submit.prevent="planAndExecuteGoal">
       <input type="text" v-model="goal" placeholder="Write a program that generates the fibonacci sequence"/>
-      <button>Execute Goal</button>
+      <button :disabled="!isFormEnabled">
+        {{ isFormEnabled ? "Execute Goal" : "Executing..." }}
+      </button>
     </form>
   </article>
 </template>
@@ -18,6 +20,11 @@ form {
   margin: 1em auto;
   width: 100%;
 }
+
+form.disabled {
+  opacity: .4;
+}
+
 input {
   padding: .5em .75em;
   border: 1px solid #ccc;
@@ -51,15 +58,28 @@ button:active {
 </style>
 
 <script>
+import EventBus from '../lib/EventBus.js'
+
 export default {
   name: 'ChatView',
   data() {
     return {
       goal: "",
+      isFormEnabled: true,
       messages: [],
     };
   },
+  mounted () {
+    EventBus.on('executionComplete', this.enableForm)
+  },
   methods: {
+    disableForm() {
+      this.isFormEnabled = false
+      this.goal = ""
+    },
+    enableForm() {
+      this.isFormEnabled = true
+    },
     chat(message) {
       this.messages.push({
         role: "user",
@@ -99,6 +119,7 @@ export default {
     },
     async planAndExecuteGoal () {
       const goal = this.goal.toLowerCase()
+      this.disableForm()
       const message = `
 You are inside a shell.
 Provide a series of terminal commands one after the other to ${goal}
@@ -129,13 +150,7 @@ EVERYTHING YOU SAY WILL DIRECTLY BE SENT TO A TERMINAL, so only reply with a str
         .split('\n')
         .filter(line => line != '')
       console.log(lines)
-      // executeLinesWhenReady(lines)
-      this.$emit('lines', lines)
-    },
-
-    sendMessage() {
-      this.$emit("send-message", this.message);
-      this.message = "";
+      EventBus.emit('executeLinesWhenReady', lines)
     },
   },
 };

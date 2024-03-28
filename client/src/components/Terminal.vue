@@ -11,6 +11,7 @@ import { Terminal } from 'xterm';
 import { AttachAddon } from 'xterm-addon-attach';
 import { FitAddon } from 'xterm-addon-fit';
 import { WebLinksAddon } from 'xterm-addon-web-links';
+import EventBus from '../lib/EventBus.js';
 
 export default {
   name: 'TerminalView',
@@ -123,12 +124,18 @@ export default {
         await this.sendSlowlyLikeNaturalTyping(line + '\r');
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
+      while (!this.isPtyReady) {
+        console.log('waiting for pty to be ready')
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+      EventBus.emit('executionComplete')
     }
   },
   mounted() {
     window.executeLinesWhenReady = this.executeLinesWhenReady
     this.loadConnection()
     this.$emit("toggleTerminal", { terminal: this.terminal })
+    EventBus.on('executeLinesWhenReady', this.executeLinesWhenReady)
   },
   unmounted() {
     delete window.executeLinesWhenReady
