@@ -26,6 +26,7 @@ const setupWebsocketAndPty = () =>{
           name: 'xterm-color',
           cwd: CWD,
           env: process.env,
+          cols: 128,
       });
 
       // Catch incoming request

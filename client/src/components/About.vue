@@ -15,7 +15,7 @@
         href="https://github.com/namanyayg/kevin">open-source</a> interface.</p>
     <p>The name comes from the legendary phreaker and my childhood hero <strong>Kevin Mitnick</strong> and is a play on
       Cognition Labs&rsquo; product name.</p>
-    <p>I have clocked around <span class="tilde">~</span>8 hours working on Kevin till now, so please keep the
+    <p>I have clocked around <span class="tilde">~</span>10 hours working on Kevin till now, so please keep the
       appropriate expectations. I&rsquo;ve made Kevin for myself as a hobby project and I&rsquo;m usually actively working on <a
         href="https://nmn.gl/">something else</a>.</p>
     <p><strong>Tasks:</strong></p>

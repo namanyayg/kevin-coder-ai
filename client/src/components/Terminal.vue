@@ -20,7 +20,8 @@ export default {
       ws: WebSocket,
       terminal: new Terminal,
       isPtyReady: true,
-      terminalPromptData: ''
+      terminalPromptSanitized: '',
+      directoryPathRegex: /([a-zA-Z-_ ]*:?[\\/][a-zA-Z-_ ]*)/g
     }
   },
   created() {
@@ -79,10 +80,11 @@ export default {
       let isInNano = false
       ws.onmessage = (message) => {
         latestData = message.data
-        if (!this.terminalPromptData) {
+        if (!this.terminalPromptSanitized) {
           setTimeout(() => {
-            this.terminalPromptData = message.data
-            console.log('terminal prompt chosen', this.terminalPromptData)
+            // remove any windows or unix directory path
+            this.terminalPromptSanitized = message.data.replace(this.directoryPathRegex, '');
+            console.log('terminal prompt chosen', this.terminalPromptSanitized)
             this.isPtyReady = true
             console.log('PTY is ready')
           }, 500)
@@ -94,7 +96,8 @@ export default {
         // if in nano then it's ready,
         // otherwise if latest data is equal to the terminal prompt message,
         // then we can say that it is "ready"
-        this.isPtyReady = isInNano ? true : latestData === this.terminalPromptData
+        console.log('latest sanitized', latestData.replace(this.directoryPathRegex, ''))
+        this.isPtyReady = isInNano ? true : latestData.replace(this.directoryPathRegex, '') === this.terminalPromptSanitized
         // console.log(this.isPtyReady ? 'PTY is ready' : 'PTY is not ready')
       }
     },
