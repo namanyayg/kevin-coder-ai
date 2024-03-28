@@ -1,6 +1,6 @@
 <template>
   <section>
-    <p class="intro"><strong>Kevin the Coder</strong> <em>(Alpha PoC)</em> interacts with your local filesystem using a
+    <p class="intro"><strong>Kevin</strong> <em>(Alpha)</em> interacts with your local filesystem using a
       websocket connection to pty
       <em>(that <a href="https://github.com/namanyayg/kevin">you have to separately install</a>)</em> and writes
       JavaScript code and Jest tests to write any code that
@@ -11,7 +11,7 @@
       mine to create a bot that could write code for me <em>(so I could delegate the boilerplate and focus on the
         creative parts of programming).</em></p>
     <p>Seeing <a href="https://www.cognition-labs.com/">Devin</a> made me realize that my teenage dream is close to
-      becoming reality. For personal satisfaction, I&rsquo;ve embarked on making my own <a
+      becoming reality. For personal satisfaction, I embarked on making my own <a
         href="https://github.com/namanyayg/kevin">open-source</a> interface.</p>
     <p>The name comes from the legendary phreaker and my childhood hero <strong>Kevin Mitnick</strong> and is a play on
       Cognition Labs&rsquo; product name.</p>

@@ -71,31 +71,31 @@ export default {
   },
   mounted () {
     EventBus.on('executionComplete', this.enableForm)
-    EventBus.emit('executeLinesWhenReady', [
-      "mkdir fibonacci_project",
-      "cd fibonacci_project",
-      "npm init -y",
-      "npm install --save jest",
-      "nano fibonacci.js",
-      "function fibonacci(n) {",
-      "  let fib = [0, 1];",
-      "  for (let i = 2; i <= n; i++) {",
-      "    fib[i] = fib[i - 1] + fib[i - 2];",
-      "  }",
-      "  return fib[n];",
-      "}",
-      "module.exports = fibonacci;",
-      "\u0018",
-      "Y",
-      "nano fibonacci.test.js",
-      "const fibonacci = require('./fibonacci');",
-      "test('fibonacci sequence element at position 5 to equal 5', () => {",
-      "  expect(fibonacci(5)).toBe(5);",
-      "});",
-      "\u0018",
-      "Y",
-      "npx jest"
-    ])
+    // EventBus.emit('executeLinesWhenReady', [
+    //   "mkdir fibonacci_project",
+    //   "cd fibonacci_project",
+    //   "npm init -y",
+    //   "npm install --save jest",
+    //   "nano fibonacci.js",
+    //   "function fibonacci(n) {",
+    //   "  let fib = [0, 1];",
+    //   "  for (let i = 2; i <= n; i++) {",
+    //   "    fib[i] = fib[i - 1] + fib[i - 2];",
+    //   "  }",
+    //   "  return fib[n];",
+    //   "}",
+    //   "module.exports = fibonacci;",
+    //   "\u0018",
+    //   "Y",
+    //   "nano fibonacci.test.js",
+    //   "const fibonacci = require('./fibonacci');",
+    //   "test('fibonacci sequence element at position 5 to equal 5', () => {",
+    //   "  expect(fibonacci(5)).toBe(5);",
+    //   "});",
+    //   "\u0018",
+    //   "Y",
+    //   "npx jest"
+    // ])
   },
   methods: {
     disableForm() {

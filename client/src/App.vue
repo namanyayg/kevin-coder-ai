@@ -1,7 +1,7 @@
 <template>
   <main>
     <header>
-      <h1>Kevin the Coder</h1>
+      <h1>Kevin</h1>
       <h2 class="subtitle">Your Open Source AI Software Engineer</h2>
     </header>
     <Terminal></Terminal>

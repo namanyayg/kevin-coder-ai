@@ -1,7 +1,10 @@
 const WebSocket = require('ws')
 const os = require('os');
 const pty = require('node-pty');
-const path = require('path')
+const path = require('path');
+require('dotenv').config();
+
+console.log(`Setting CWD ${process.env.CWD}`)
 
 const CWD = process.env.CWD || path.join(__dirname, 'kevin-output');
 
