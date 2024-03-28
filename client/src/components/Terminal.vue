@@ -40,11 +40,11 @@ export default {
         useStyle: true,
         cursorBlink: true,
         screenReaderMode: true,
-        // fontFamily: "FiraCode Nerd Font",
         cols: 128,
       });
       this.terminal = terminal
       terminal.open(document.getElementById("terminal"));
+
 
       var attachAddon = new AttachAddon(this.ws, { bidirectional: true });
 
@@ -57,20 +57,13 @@ export default {
 
       ws.onclose = () => {
         terminal.clear()
-        terminal.writeln("Byeee")
+        terminal.writeln('Requires active websocket connection to start! Set it up using the code on Kevin\'s Github.')
       }
 
       ws.onopen = () => {
         terminal.loadAddon(attachAddon)
         terminal._initialized = true;
         terminal.focus();
-        terminal.onResize((event) => {
-          var rows = event.rows;
-          var cols = event.cols;
-          var size = JSON.stringify({ cols: cols, rows: rows + 1 });
-          var send = new TextEncoder().encode("\x01" + size);
-          ws.send(send);
-        })
 
         terminal.onTitleChange(function (event) {
           console.log(event)
@@ -101,7 +94,7 @@ export default {
         // otherwise if latest data is equal to the terminal prompt message,
         // then we can say that it is "ready"
         this.isPtyReady = isInNano ? true : latestData === this.terminalPromptData
-        console.log(this.isPtyReady ? 'PTY is ready' : 'PTY is not ready')
+        // console.log(this.isPtyReady ? 'PTY is ready' : 'PTY is not ready')
       }
     },
     sendSlowlyLikeNaturalTyping(string) {

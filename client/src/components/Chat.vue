@@ -1,32 +1,48 @@
 <template>
-  <form @submit.prevent="sendMessage">
-    <input type="text" v-model="message" />
-    <button>Send</button>
-  </form>
+  <article>
+    <h2>Specify a goal you&rsquo;re looking to execute</h2>
+    <p><em>Note: Kevin is currently in Alpha, so please only give him small goals for now.</em></p>
+    <form @submit.prevent="planAndExecuteGoal">
+      <input type="text" v-model="goal" placeholder="Write a program that generates the fibonacci sequence"/>
+      <button>Execute Goal</button>
+    </form>
+  </article>
 </template>
 
 <style scoped>
+article {
+  text-align: center;
+}
+
 form {
-  margin: 0 auto;
+  margin: 1em auto;
+  width: 100%;
 }
 input {
-  padding: 5px;
+  padding: .5em .75em;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 2px;
+  display: inline-block;
+  width: 30em;
+  margin-right: .5em;
 }
 
 button {
-  padding: 5px 10px;
+  border: 1px solid #999;
+  padding: .5em .75em;
   border: none;
-  border-radius: 4px;
-  background-color: blue;
+  border-radius: 2px;
   color: white;
-  font-family: monospace;
   cursor: pointer;
+  display: inline-block;
+  background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: rainbow 5s alternate infinite;
 }
 
-button:hover {
-  background-color: darkblue;
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 button:active {
@@ -39,7 +55,7 @@ export default {
   name: 'ChatView',
   data() {
     return {
-      message: "",
+      goal: "",
       messages: [],
     };
   },
@@ -81,7 +97,8 @@ export default {
           console.error(error);
         });
     },
-    async planAndExecuteGoal (goal){
+    async planAndExecuteGoal () {
+      const goal = this.goal.toLowerCase()
       const message = `
 You are inside a shell.
 Provide a series of terminal commands one after the other to ${goal}
@@ -96,7 +113,7 @@ EVERYTHING YOU SAY WILL DIRECTLY BE SENT TO A TERMINAL, so only reply with a str
 
       // remove ```bash and ``` from the message
       let responseMessageCleaned = responseMessage
-        .replace(/```bash/g, '')
+        .replace(/```(shell|sh|bash)/g, '')
         .replace(/```/g, '')
 
       // convert all escape sequences to ascii characters. For example, ^O is represented by \x0f (ASCII 15) and ^X is represented by \x18 (ASCII 24).
@@ -108,7 +125,9 @@ EVERYTHING YOU SAY WILL DIRECTLY BE SENT TO A TERMINAL, so only reply with a str
       responseMessageCleaned = responseMessageCleaned.replace(/\\n/g, '\n')
 
       // Send the response to the socket, line by line, using executeLikeNaturalTyping
-      const lines = responseMessageCleaned.split('\n');
+      const lines = responseMessageCleaned
+        .split('\n')
+        .filter(line => line != '')
       console.log(lines)
       // executeLinesWhenReady(lines)
       this.$emit('lines', lines)

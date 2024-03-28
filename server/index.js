@@ -1,6 +1,9 @@
 const WebSocket = require('ws')
-var os = require('os');
-var pty = require('node-pty');
+const os = require('os');
+const pty = require('node-pty');
+const path = require('path')
+
+const CWD = process.env.CWD || path.join(__dirname, 'test');
 
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 
@@ -21,7 +24,7 @@ const setupWebsocketAndPty = () =>{
       console.log("new session")
       var ptyProcess = pty.spawn(shell, [], {
           name: 'xterm-color',
-          cwd: 'test',
+          cwd: CWD,
           env: process.env,
       });
 
