@@ -1,17 +1,68 @@
 <template>
-  <article>
-    <h2>Specify a goal you&rsquo;re looking to execute</h2>
-    <p><em>Note: Kevin is currently in Alpha, so please only give him small goals for now.</em></p>
-    <form :className="isFormEnabled ? '' : 'disabled'" @submit.prevent="planAndExecuteGoal">
-      <input type="text" v-model="goal" placeholder="Write a program that generates the fibonacci sequence"/>
-      <button :disabled="!isFormEnabled">
-        {{ isFormEnabled ? "Execute Goal" : "Executing..." }}
-      </button>
-    </form>
-  </article>
+  <div>
+    <section v-if="!openAiKey">
+      <form @submit.prevent="setOpenAiKey">
+        <input type="text" v-model="currentOpenAiKey" placeholder="Enter OpenAI API Key to Begin" />
+        <button>Save Key</button>
+      </form>
+      <div class="notice">Your key is stored in LocalStorage. There are no servers behind Kevin so nothing is
+        transmitted.</div>
+    </section>
+    <article :className="isReady ? '' : 'disabled'">
+      <h2>Specify a goal you&rsquo;re looking to execute</h2>
+      <p><em>Note: Kevin is currently in Alpha, so please only give him small goals for now.</em></p>
+
+      <form :className="isFormEnabled ? '' : 'disabled'" @submit.prevent="planAndExecuteGoal">
+        <input type="text" v-model="goal" placeholder="Write a program that generates the fibonacci sequence" />
+        <button :disabled="!isFormEnabled || !isReady">
+          {{ isFormEnabled ? "Execute Goal" : "Executing..." }}
+        </button>
+      </form>
+    </article>
+  </div>
 </template>
 
 <style scoped>
+section {
+  text-align: center;
+}
+
+section,
+section input,
+section button {
+  font-family: 'Computer Modern Sans', monospace;
+}
+
+.notice {
+  display: inline-block;
+  background-color: #ffcccc;
+  border: 1px solid #ff6666;
+  border-radius: .25em;
+  padding: .375em .5em .25em .5em;
+  color: #333;
+  font-size: 0.875em;
+  line-height: 1;
+}
+
+section button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  margin: 0.25em 0.5em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: .25em;
+}
+
+section button:hover {
+  background-color: #45a049;
+}
+
 article {
   text-align: center;
 }
@@ -21,7 +72,7 @@ form {
   width: 100%;
 }
 
-form.disabled {
+.disabled {
   opacity: .4;
 }
 
@@ -34,7 +85,7 @@ input {
   margin-right: .5em;
 }
 
-button {
+article button {
   border: 1px solid #999;
   padding: .5em .75em;
   border: none;
@@ -64,12 +115,26 @@ export default {
   name: 'ChatView',
   data() {
     return {
+      currentOpenAiKey: '',
+      openAiKey: '',
       goal: "",
       isFormEnabled: true,
+      isReady: false,
       messages: [],
     };
   },
+  watch: {
+    openAiKey(newKey) {
+      if (newKey) {
+        localStorage.openAiKey = newKey
+      }
+      this.isReady = true
+    }
+  },
   mounted () {
+    if (localStorage.openAiKey) {
+      this.openAiKey = localStorage.openAiKey;
+    }
     EventBus.on('executionComplete', this.enableForm)
     // EventBus.emit('executeLinesWhenReady', [
     //   "mkdir fibonacci_project",
@@ -105,6 +170,10 @@ export default {
     enableForm() {
       this.isFormEnabled = true
     },
+    setOpenAiKey() {
+      this.isReady = true
+      this.openAiKey = this.currentOpenAiKey
+    },
     chat(message) {
       this.messages.push({
         role: "user",
@@ -116,7 +185,7 @@ export default {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.VUE_APP_OPENAI_API_KEY}`
+          'Authorization': `Bearer ${this.openAiKey}`
         },
         body: JSON.stringify({
           model: 'gpt-4-turbo-preview',

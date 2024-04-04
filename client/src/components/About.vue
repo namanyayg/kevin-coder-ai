@@ -24,6 +24,7 @@
           filesystem using websocket and node-pty.</s></li>
       <li class="checked"><input type="checkbox" checked /><s>Make GPT4 work with the terminal using nano, node, and
           jest.</s></li>
+      <li><input type="checkbox" />Add a &ldquo;Planner&rdquo; agent</li>
       <li><input type="checkbox" />Set up RAG so it can modify any existing codebase</li>
     </ul>
   </section>
