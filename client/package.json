@@ -6,8 +6,7 @@
     "start": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "NODE_ENV=production vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "gh-deploy": "git push origin :gh-pages && git subtree push --prefix client/dist origin gh-pages"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.8.3",
