@@ -1,6 +1,8 @@
 # Kevin
 _Your Open Source AI Software Engineer_
 
+![image](https://github.com/user-attachments/assets/bc28ee83-0ec7-47be-ad2b-da226f83fc74)
+
 ## Overview
 
 Kevin the Coder (Alpha) interacts with your local filesystem using a websocket connection to pty and writes JavaScript code and Jest tests to write any code that you want.
